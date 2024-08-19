@@ -4,7 +4,7 @@ import { nodePolyfills } from "vite-plugin-node-polyfills";
 
 export default defineConfig({
   plugins: [
-    nodePolyfills({ include: ["http", "https", "fs"] }),
+    nodePolyfills({ include: ["http", "https", "fs", "stream"] }),
     {
       name: "copy-files",
       writeBundle: () =>
@@ -12,6 +12,10 @@ export default defineConfig({
           {
             src: "node_modules/monero-ts/dist/monero_wallet_keys.wasm",
             dest: "dist/monero_wallet_keys.wasm",
+          },
+          {
+            src: "node_modules/monero-ts/dist/monero_wallet_full.wasm",
+            dest: "dist/monero_wallet_full.wasm",
           },
           {
             src: "node_modules/monero-ts/dist/monero_web_worker.js",

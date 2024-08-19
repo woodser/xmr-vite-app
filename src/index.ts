@@ -30,7 +30,7 @@ async function testSampleCode() {
         at async T.getHeight (index.js:496:42372)
         at async tA (index.js:505:106455) */
   // connect to mainnet daemon without worker proxy
-  let daemon1 = await moneroTs.connectToDaemonRpc({server: "https://node.sethforprivacy.com:18089", proxyToWorker: false});
+  let daemon1 = await moneroTs.connectToDaemonRpc({server: "https://moneronode.org:18081", proxyToWorker: false});
   console.log("Daemon height 1: " + await daemon1.getHeight());
 
   // TODO: get failures in the browser using web worker: "fetch is not a function"
@@ -39,7 +39,7 @@ async function testSampleCode() {
         at e.exports.<anonymous> (monero_web_worker.js:2:1542602)
         at a.emit (monero_web_worker.js:2:1007398) */
   // connect to mainnet daemon with worker proxy
-  let daemon2 = await moneroTs.connectToDaemonRpc({server: "https://node.sethforprivacy.com:18089", proxyToWorker: true});
+  let daemon2 = await moneroTs.connectToDaemonRpc({server: "https://moneronode.org:18081", proxyToWorker: true});
   console.log("Daemon height 2: " + await daemon2.getHeight());
 
   // connect to a daemon
@@ -90,6 +90,7 @@ async function testSampleCode() {
   let walletRpc = await moneroTs.connectToWalletRpc("http://localhost:28084", "rpc_user", "abc123");
   await walletRpc.openWallet("test_wallet_1", "supersecretpassword123");
   let primaryAddress = await walletRpc.getPrimaryAddress(); // 555zgduFhmKd2o8rPUz...
+  await walletRpc.sync();                                   // synchronize with the network
   let balance = await walletRpc.getBalance();               // 533648366742
   let txs = await walletRpc.getTxs();                       // get transactions containing transfers to/from the wallet
 
