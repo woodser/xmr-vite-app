@@ -30,7 +30,7 @@ async function testSampleCode() {
         at async T.getHeight (index.js:496:42372)
         at async tA (index.js:505:106455) */
   // connect to mainnet daemon without worker proxy
-  let daemon1 = await moneroTs.connectToDaemonRpc({server: "https://node.sethforprivacy.com:18089", proxyToWorker: false});
+  let daemon1 = await moneroTs.connectToDaemonRpc({server: "https://moneronode.org:18081", proxyToWorker: false});
   console.log("Daemon height 1: " + await daemon1.getHeight());
 
   // TODO: get failures in the browser using web worker: "fetch is not a function"
@@ -39,7 +39,7 @@ async function testSampleCode() {
         at e.exports.<anonymous> (monero_web_worker.js:2:1542602)
         at a.emit (monero_web_worker.js:2:1007398) */
   // connect to mainnet daemon with worker proxy
-  let daemon2 = await moneroTs.connectToDaemonRpc({server: "https://node.sethforprivacy.com:18089", proxyToWorker: true});
+  let daemon2 = await moneroTs.connectToDaemonRpc({server: "https://moneronode.org:18081", proxyToWorker: true});
   console.log("Daemon height 2: " + await daemon2.getHeight());
 
   // connect to a daemon

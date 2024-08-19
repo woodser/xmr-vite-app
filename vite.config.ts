@@ -94,15 +94,21 @@ export default defineConfig({
             };
 
             const Request = function(opts) {
-              const normalizedOpts = normalizeOptions(opts);
-              return axios(normalizedOpts)
-                .then(response => {
-                  if (opts.resolveWithFullResponse) {
-                    return response;
-                  }
-                  return response.data;
-                });
-            };
+        const normalizedOpts = normalizeOptions(opts);
+        return axios(normalizedOpts)
+          .then(response => {
+            if (opts.resolveWithFullResponse) {
+              // If full response is requested, return a response-like object
+              return {
+                statusCode: response.status,
+                headers: response.headers,
+                body: JSON.stringify(response.data)
+              };
+            }
+            // Otherwise, just return the response data as text
+            return JSON.stringify(response.data);
+          });
+      };
 
             const methodFactory = (method) => {
               return (url, opts = {}) => Request({ ...opts, method, url });
