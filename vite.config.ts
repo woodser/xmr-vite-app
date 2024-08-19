@@ -1,72 +1,7 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-
 import { copyFileSync } from "fs";
 import { defineConfig } from "vite";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
 
-interface RequestPromiseOptions extends AxiosRequestConfig {
-  simple?: boolean;
-  resolve?: (value: any) => void;
-  reject?: (reason: any) => void;
-}
-
-interface RequestPromiseAPI {
-  (options: RequestPromiseOptions): Promise<any>;
-  (url: string): Promise<any>;
-  get(url: string, options?: RequestPromiseOptions): Promise<any>;
-  post(url: string, options?: RequestPromiseOptions): Promise<any>;
-  put(url: string, options?: RequestPromiseOptions): Promise<any>;
-  patch(url: string, options?: RequestPromiseOptions): Promise<any>;
-  del(url: string, options?: RequestPromiseOptions): Promise<any>;
-  delete(url: string, options?: RequestPromiseOptions): Promise<any>;
-  head(url: string, options?: RequestPromiseOptions): Promise<any>;
-  options(url: string, options?: RequestPromiseOptions): Promise<any>;
-  default(url: string, options?: RequestPromiseOptions): Promise<any>;
-
-}
-
-const createRequestPromisePolyfill = `
-(axios) => {
-  const requestPromise = ((options) => {
-    let axiosOptions = {};
-    
-    if (typeof options === 'string') {
-      axiosOptions.url = options;
-    } else {
-      axiosOptions = { ...options };
-    }
-
-    return new Promise((resolve, reject) => {
-      axios(axiosOptions)
-        .then(response => {
-          if (options.simple !== false || (response.status >= 200 && response.status < 300)) {
-            resolve(response.data);
-          } else {
-            reject(new Error(\`Request failed with status code \${response.status}\`));
-          }
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
-  });
-
-  const methodFactory = (method) => {
-    return (url, options = {}) => {
-      return requestPromise({ ...options, url, method });
-    };
-  };
-
-  requestPromise.get = methodFactory('get');
-  requestPromise.post = methodFactory('post');
-  requestPromise.put = methodFactory('put');
-  requestPromise.patch = methodFactory('patch');
-  requestPromise.del = requestPromise.delete = methodFactory('delete');
-  requestPromise.head = methodFactory('head');
-  requestPromise.options = methodFactory('options');
-
-  return requestPromise;
-}`;
 export default defineConfig({
   plugins: [
     nodePolyfills({
