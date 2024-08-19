@@ -2,9 +2,11 @@
   "name": "vite-sample-app",
   "private": true,
   "scripts": {
-    "build": "vite build && vite preview --port 4173"
+    "build": "vite build && vite preview --port 4173",
+    "dev": "vite"
   },
   "dependencies": {
+    "axios": "^1.7.4",
     "monero-ts": "^0.10.0"
   },
   "devDependencies": {
