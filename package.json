@@ -2,7 +2,7 @@
   "name": "vite-sample-app",
   "private": true,
   "scripts": {
-    "build": "vite build && vite preview --port 4173",
+    "build": "vite build && vite preview --port 8080",
     "dev": "vite"
   },
   "dependencies": {

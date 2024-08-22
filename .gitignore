@@ -1,7 +1,6 @@
 node_modules
 yarn.lock
 bun.lockb
-package-lock.json
 pnpm-lock.yaml
 dist
 public/monero_w*
