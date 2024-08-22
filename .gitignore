@@ -4,3 +4,4 @@ bun.lockb
 package-lock.json
 pnpm-lock.yaml
 dist
+public/monero_w*

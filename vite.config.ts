@@ -1,10 +1,26 @@
-import { copyFileSync } from "fs";
+import { copyFileSync, mkdirSync } from "fs";
 import { defineConfig } from "vite";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
 
+mkdirSync("public", { recursive: true });
+[
+  {
+    src: "node_modules/monero-ts/dist/monero_wallet_keys.wasm",
+    dest: "public/monero_wallet_keys.wasm",
+  },
+  {
+    src: "node_modules/monero-ts/dist/monero_wallet_full.wasm",
+    dest: "public/monero_wallet_full.wasm",
+  },
+  {
+    src: "node_modules/monero-ts/dist/monero_web_worker.js",
+    dest: "public/monero_web_worker.js",
+  },
+].forEach(({ src, dest }) => copyFileSync(src, dest))
+
 export default defineConfig({
   plugins: [
-    nodePolyfills({ include: ["http", "https", "fs"] }),
+    nodePolyfills({ include: ["http", "https", "fs", "stream", "util", "path"] }),
     {
       name: "copy-files",
       writeBundle: () =>
@@ -14,17 +30,14 @@ export default defineConfig({
             dest: "dist/monero_wallet_keys.wasm",
           },
           {
+            src: "node_modules/monero-ts/dist/monero_wallet_full.wasm",
+            dest: "dist/monero_wallet_full.wasm",
+          },
+          {
             src: "node_modules/monero-ts/dist/monero_web_worker.js",
             dest: "dist/monero_web_worker.js",
           },
         ].forEach(({ src, dest }) => copyFileSync(src, dest)),
-    },
-    {
-      name: "replace",
-      transform: (src) =>
-        src.includes("require.cache")
-          ? src.replaceAll("require.cache", "null")
-          : src,
     },
   ],
   build: {
@@ -39,4 +52,5 @@ export default defineConfig({
       },
     },
   },
+  publicDir: "public",
 });
