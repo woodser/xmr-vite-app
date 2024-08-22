@@ -8,4 +8,4 @@ This project contains sample VITE web applications using the [monero-ts](https:/
 2. `cd xmr-sample-vite`
 3. `npm install`
 4. `npm run build`
-9. Access web app at http://localhost:4173/
+9. Access web app at http://localhost:8080/
