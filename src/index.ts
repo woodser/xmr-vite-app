@@ -24,20 +24,10 @@ async function main() {
 
 async function testSampleCode() {
 
-  // TODO: get failures in the browser making http requests without worker proxy: 
-  /* TypeError: Cannot read properties of undefined (reading 'call')
-        at m.sendJsonRequest (index.js:478:11292)
-        at async T.getHeight (index.js:496:42372)
-        at async tA (index.js:505:106455) */
   // connect to mainnet daemon without worker proxy
   let daemon1 = await moneroTs.connectToDaemonRpc({server: "https://moneronode.org:18081", proxyToWorker: false});
   console.log("Daemon height 1: " + await daemon1.getHeight());
 
-  // TODO: get failures in the browser using web worker: "fetch is not a function"
-  /* TypeError: r.g.fetch is not a function
-        at h._onFinish (monero_web_worker.js:2:1543631)
-        at e.exports.<anonymous> (monero_web_worker.js:2:1542602)
-        at a.emit (monero_web_worker.js:2:1007398) */
   // connect to mainnet daemon with worker proxy
   let daemon2 = await moneroTs.connectToDaemonRpc({server: "https://moneronode.org:18081", proxyToWorker: true});
   console.log("Daemon height 2: " + await daemon2.getHeight());
