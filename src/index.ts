@@ -4,6 +4,8 @@ import moneroTs from "monero-ts";
 // @ts-ignore
 window.monero = moneroTs;
 
+moneroTs.LibraryUtils.setWorkerLoader(() => new Worker(new URL("monero-ts/dist/monero.worker.js", import.meta.url)));
+
 main();
 testSampleCode();
 

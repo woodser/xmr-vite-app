@@ -6,7 +6,7 @@
     "dev": "vite"
   },
   "dependencies": {
-    "monero-ts": "^0.10.3"
+    "monero-ts": "github:mainnet-pat/monero-ts#23fe3bb62b618a8284a2fa3e3786617e42dfb104"
   },
   "devDependencies": {
     "vite": "^5.2.9",
