@@ -3,4 +3,4 @@ yarn.lock
 bun.lockb
 pnpm-lock.yaml
 dist
-public/monero_w*
+public/monero*
