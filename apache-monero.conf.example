@@ -1,0 +1,46 @@
+<VirtualHost host.domain.tld:443>
+
+	ServerName host.domain.tld
+	ServerAdmin webmaster@domain.tld
+
+	# Include the Let's Encrypt challenge configuration
+	# Include /etc/httpd/acme-challenge.conf
+
+	SSLEngine on
+
+	SSLCertificateFile "/etc/httpd/certs/host.domain.tld.crt"
+	SSLCertificateKeyFile "/etc/httpd/certs/host.domain.tld.key"
+	SSLCACertificateFile "/etc/httpd/certs/ca.crt"
+
+	<Location "/rpc">
+		Header add Access-Control-Allow-Origin "*"
+		Header add Access-Control-Allow-Methods "POST, PUT, GET, OPTIONS"
+		Header add Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
+
+	</Location>
+
+	SSLProxyEngine On
+	ProxyPreserveHost On
+	ProxyRequests Off
+
+	ProxyPass /rpc/38085 https://host.domain.tld:38085
+	ProxyPassReverse /rpc/38085 https://host.domain.tld:38085
+
+	ErrorLog "/var/log/httpd/error_log"
+	TransferLog "/var/log/httpd/access_log"
+
+	CustomLog "/var/log/httpd/ssl_request_log" \
+	          "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
+
+</VirtualHost>
+
+<VirtualHost host.domain.tld:80>
+
+	ServerName host.domain.tld
+	ServerAdmin webmaster@domain.tld
+
+#	Include /etc/httpd/acme-challenge.conf
+
+	Redirect / https://host.domain.tld/
+
+</VirtualHost>
