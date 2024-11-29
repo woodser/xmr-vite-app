@@ -2,14 +2,16 @@
   "name": "vite-sample-app",
   "private": true,
   "scripts": {
-    "build": "vite build && vite preview --port 8080",
+    "build": "vite build",
+    "start": "vite preview --port 8080",
     "dev": "vite"
   },
   "dependencies": {
     "monero-ts": "^0.11.1"
   },
   "devDependencies": {
-    "vite": "^5.2.9",
-    "vite-plugin-node-polyfills": "^0.21.0"
+    "@types/node": "^22.8.6",
+    "vite": "^5.4.10",
+    "vite-plugin-node-polyfills": "^0.22.0"
   }
 }
